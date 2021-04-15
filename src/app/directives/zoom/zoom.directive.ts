@@ -5,7 +5,7 @@ import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output }
 })
 export class ZoomDirective implements OnInit, OnDestroy {
   /**
-   * 
+   *
    */
   @Input() zoom: number = 1;
   @Output() zoomChange = new EventEmitter<number>();
@@ -14,8 +14,6 @@ export class ZoomDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.elementRef.nativeElement.style.zoom = this.zoom;
-
-    window.
 
     document.addEventListener('wheel', e => {
       e.preventDefault();

@@ -3,23 +3,28 @@
     enableZoom
     [(zoom)]="zoom"
 
+    enableBackgroundDraggable
+    [(top)]="boardTop"
+    [(left)]="boardLeft"
+
     (click)="clickOutside($event)"
     (dblclick)="addItem($event)"
 
     style="min-width: 100%;min-height: 100%;"
     [style.backgroundImage]="'radial-gradient(var(--color-text) 5%, var(--color-background) 5%)'"
     [style.backgroundSize]="'15px 15px'"
-  >
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
-      <polygon points="0 0, 10 4, 0 8" stroke="var(--color-primary)" fill="var(--color-primary)" />
-    </marker>
-  </defs>
+  ><g>
+
+    <defs>
+      <marker id="end-line-arrow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+        <polygon points="0 0, 10 4, 0 8" stroke="var(--color-primary)" fill="var(--color-primary)" />
+      </marker>
+    </defs>
 
     <!-- Build lines in the interface -->
     <g
     *ngFor="let item of items; index as i"
-    
+
       app-line
       [item]="item"
       [nextItem]="items[i+1]"
@@ -27,15 +32,15 @@
 
 
     <!-- Build items in the interface -->
-    <foreignObject      
+    <foreignObject
       *ngFor="let item of items; index as i"
 
       dragEnabled
       [dragZoom]="zoom"
       [(dragTop)]="item.top"
       [(dragLeft)]="item.left"
-      [dragDelimiterTop]="10"
-      [dragDelimiterLeft]="10"
+      [dragDelimiterTop]="10 - boardTop"
+      [dragDelimiterLeft]="10 - boardLeft"
       [dragSnapGridSize]="15"
       [dragSnapGridWhileDrag]="snapGridWhileDrag"
 
@@ -45,7 +50,7 @@
       [style.cursor]="'all-scroll'"
       [style.transition]="'box-shadow 0.2s'"
       [style.boxShadow]="item.isSelected ? 'var(--shadow-m)' : ''"
-      
+
       (click)="$event.stopPropagation()"
       (mousedown)="selectByIndex($event, i, $event.ctrlKey)"
       >
@@ -67,5 +72,5 @@
         </div>
     </foreignObject>
 
-  </svg>
+  </g></svg>
 </div>

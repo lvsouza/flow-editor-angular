@@ -10,8 +10,9 @@ export class FlowEditorComponent implements OnInit {
   @Input() items: IItem[] = [];
   @Input() snapGridWhileDrag?: boolean = false;
 
-
   public zoom: number = 1;
+  public boardTop: number = 0;
+  public boardLeft: number = 0;
 
   constructor() { }
 
@@ -30,8 +31,8 @@ export class FlowEditorComponent implements OnInit {
 
     this.items.push({
       id: this.items.length,
-      width: 100,
-      height: 100,
+      width: 500,
+      height: 500,
       text: 'Testando',
       top: e.offsetY - 50,
       left: e.offsetX - 50,

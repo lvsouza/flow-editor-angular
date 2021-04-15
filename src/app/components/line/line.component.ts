@@ -45,50 +45,110 @@ export class LineComponent {
 
     }
 
+    console.log('getX1', this.angle);
     return x1;
   }
   public getY1(y1: number) {
+
+    // 315 - 0 - 45
     if (this.angle > 315 || this.angle < 45) {
       return y1 - this.nextItem.height;
 
-    } else if ((this.angle > 225 && this.angle < 315) || (this.angle < 135 && this.angle > 45)) {
+      // 225 - 315
+    } else if (this.angle > 225 && this.angle < 315) {
       return y1 - (this.nextItem.height / 2);
 
+      // 45 - 135 
+    } else if (this.angle < 135 && this.angle > 45) {
+      return y1 - (this.nextItem.height / 2);
+
+      // 135 - 225
     } else if (this.angle < 225 && this.angle > 135) {
       return y1;
 
     }
 
+    console.log('getY1', this.angle);
     return y1;
   }
 
   // Next item
   public getX2(x2: number) {
-    if (this.angle > 225 && this.angle < 315) {
+
+    // 225 - 315
+    if (this.angle < 315 && this.angle > 225) {
       return x2 + (this.nextItem.width / 2);
 
-    } else if ((this.angle > 315 && this.angle < 45) || (this.angle > 135 && this.angle < 225)) {
+      // 315 - 0 - 45
+    } else if (this.angle > 315 || this.angle < 45) {
+      if (this.angle > 315 && this.angle < 335) {
+        return x2 + (this.nextItem.width / 4);
+
+      } else if (this.angle > 25 && this.angle < 45) {
+        return x2 - (this.nextItem.width / 4);
+
+      }
+
       return x2;
 
+      // 135 - 225
+    } else if (this.angle < 225 && this.angle > 135) {
+      if (this.angle > 190) {
+        return x2 + (this.nextItem.width / 4);
+
+      } else if (this.angle < 170) {
+        return x2 - (this.nextItem.width / 4);
+
+      }
+
+      return x2;
+
+      // 45 - 135
     } else if (this.angle > 45 && this.angle < 135) {
       return x2 - (this.nextItem.width / 2);
 
     }
 
+    console.log('getX2', this.angle);
     return x2;
   }
   public getY2(y2: number) {
+
+    // 315 - 0 - 45 --- 
     if (this.angle > 315 || this.angle < 45) {
+
       return y2 + this.nextItem.height;
 
-    } else if ((this.angle > 225 && this.angle < 315) || (this.angle < 135 && this.angle > 45)) {
+      // 225 - 315
+    } else if (this.angle > 225 && this.angle < 315) {
+      if (this.angle > 225 && this.angle < 250) {
+        return (y2 + (this.nextItem.height / 2)) - (this.nextItem.height / 4);
+
+      } else if (this.angle > 290 && this.angle < 315) {
+        return (y2 + (this.nextItem.height / 2)) + (this.nextItem.height / 4);
+
+      }
+
       return y2 + (this.nextItem.height / 2);
 
+      // 45 - 135
+    } else if (this.angle < 135 && this.angle > 45) {
+      if (this.angle > 115 && this.angle < 135) {
+        return (y2 + (this.nextItem.height / 2)) - (this.nextItem.height / 4);
+
+      } else if (this.angle > 45 && this.angle < 70) {
+        return (y2 + (this.nextItem.height / 2)) + (this.nextItem.height / 4);
+
+      }
+
+      return y2 + (this.nextItem.height / 2);
+
+      // 135 - 225
     } else if (this.angle < 225 && this.angle > 135) {
       return y2;
-
     }
 
+    console.log('getY2', this.angle);
     return y2;
   }
 }

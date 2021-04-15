@@ -1,0 +1,234 @@
+@import './animations.css';
+@import './positions.css';
+@import './z-indexes.css';
+@import './paddings.css';
+@import './opacitys.css';
+@import './outlines.css';
+@import './shadows.css';
+@import './borders.css';
+@import './margins.css';
+@import './colors.css';
+@import './events.css';
+@import './flexs.css';
+@import './fonts.css';
+@import './hrs.css';
+:root {
+    /*
+        Font default 16px
+        16 * 0.6 = 9.6px
+
+        1rem = 9.6px
+    */
+    font-size: 50%;
+    /* *** */
+    --size-none: 0rem;
+    --size-xxs: 0.1rem;
+    --size-xs: 0.5rem;
+    --size-s: 1rem;
+    --size-sm: 1.4rem;
+    --size-m: 1.8rem;
+    --size-g: 2.2rem;
+    --size-xg: 3rem;
+    --size-fill: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    -ms-user-select: none;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-m);
+    -webkit-font-smoothing: antialiased;
+}
+
+*:focus {
+    outline: var(--outline-soft);
+    outline-style: auto;
+}
+
+html, body, #root {
+    background-color: var(--color-background);
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    width: 100vw;
+}
+
+#root {
+    overflow: auto;
+}
+
+div, nav, form {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    background-color: transparent;
+}
+
+body, input, button, textarea, div, nav, form, label, h1, h2, h3, h4, h5, h6, span {
+    color: var(--color-text);
+}
+
+body, input, button, textarea {
+    font: var(--font-weight-m) var(--font-size-g) var(--font-family);
+}
+
+input[type=checkbox] {
+    padding: unset;
+    cursor: pointer;
+    width: var(--size-g);
+    -moz-appearance: none;
+    height: var(--size-g);
+    -webkit-appearance: none;
+}
+
+input[type=checkbox]:checked {
+    background-color: var(--color-primary);
+}
+
+input[type=checkbox]:hover {
+    filter: brightness(0.8);
+}
+
+input[type=checkbox]:checked:after {
+    margin-top: calc(var(--size-m) - calc(var(--size-m) * 0.85));
+    margin-left: calc(var(--size-g) / 3);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: var(--size-xs);
+    height: var(--size-s);
+    display: block;
+    content: "";
+    border: solid white;
+    border-width: 0 var(--size-xxs) var(--size-xxs) 0;
+}
+
+input[type=radio] {
+    padding: unset;
+    cursor: pointer;
+    border-radius: 50%;
+    width: var(--size-g);
+    -moz-appearance: none;
+    height: var(--size-g);
+    -webkit-appearance: none;
+}
+
+input[type=radio]:checked {
+    background-color: white;
+}
+
+input[type=radio]:hover {
+    filter: brightness(0.8);
+}
+
+input[type=radio]:checked:after {
+    width: 49%;
+    height: 49%;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    border: var(--size-xs) solid white;
+    background-color: var(--color-primary);
+}
+
+input, textarea, select {
+    border: var(--size-xxs) solid var(--color-border);
+    background-color: var(--color-background-bars);
+    border-radius: var(--size-xs);
+    padding: var(--padding-s);
+    padding-right: var(--padding-xs);
+    padding-left: var(--padding-xs);
+}
+
+a {
+    color: var(--color-success);
+    cursor: pointer;
+}
+
+button:focus, button:hover, a:hover {
+    opacity: 0.9;
+}
+
+input:disabled, textarea:disabled, select:disabled, button:disabled {
+    opacity: 0.5;
+}
+
+button:active, input[type="button"]:active, input[type="submit"]:active {
+    opacity: 0.8;
+}
+
+a:active {
+    opacity: 0.5;
+}
+
+label, button, input[type="button"], input[type="submit"] {
+    cursor: pointer;
+}
+
+.full-width {
+    width: var(--size-fill);
+}
+
+.full-height {
+    height: var(--size-fill);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    text-align: start;
+    overflow: hidden;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+/* Ajusta o scroll de todos os elementos. */
+
+::-webkit-scrollbar {
+    height: var(--size-s);
+    width: var(--size-s);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: var(--size-s);
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/* ::-webkit-scrollbar-track {
+    background-color: var(--color-transparent);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-background-highlighted);
+    border-radius: var(--size-xs);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: var(--color-background-panels);
+} */

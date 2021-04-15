@@ -1,0 +1,38 @@
+.hr {
+    height: var(--size-xxs);
+    border: none;
+}
+
+.hr.hr-vertical {
+    min-height: var(--size-fill);
+    max-height: var(--size-fill);
+    min-width: var(--size-xxs);
+    max-width: var(--size-xxs);
+    height: var(--size-fill);
+    width: var(--size-xxs);
+}
+
+.hr.hr-white {
+    background-color: var(--color-background);
+    width: var(--size-fill);
+}
+
+.hr.hr-primary {
+    background-color: var(--color-primary);
+    width: var(--size-fill);
+}
+
+.hr.hr-success {
+    background-color: var(--color-success);
+    width: var(--size-fill);
+}
+
+.hr.hr-transparent {
+    background-color: transparent;
+    width: var(--size-fill);
+}
+
+.hr.divider {
+    margin-bottom: var(--margin-s);
+    margin-top: var(--margin-s);
+}

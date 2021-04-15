@@ -1,0 +1,48 @@
+:root {
+    --shadow-none: none;
+    --shadow-xs: 0 0.1rem 0.2rem rgba(0, 0, 0, .1);
+    --shadow-s: 0 0.2rem 0.4rem rgba(0, 0, 0, .1);
+    --shadow-m: 0 0.4rem 0.6rem rgba(0, 0, 0, .1);
+    --shadow-l: 0 0.6rem 0.8rem rgba(0, 0, 0, .1);
+    --shadow-xl: 0 0.8rem 0.01rem rgba(0, 0, 0, .1);
+    /* Others shadows */
+    --box-shadow-small: 4rem -0.1rem 5rem 0.01rem #191919;
+    --box-shadow-small-center: 0 0 0.4rem 0.1rem #0000008a;
+    --box-shadow-medium-center: 0 0 2rem 0.2rem #0000008a;
+}
+
+.shadow-none {
+    box-shadow: var(--shadow-none);
+}
+
+.shadow-xs {
+    box-shadow: var(--shadow-xs);
+}
+
+.shadow-s {
+    box-shadow: var(--shadow-s);
+}
+
+.shadow-m {
+    box-shadow: var(--shadow-m);
+}
+
+.shadow-l {
+    box-shadow: var(--shadow-l);
+}
+
+.shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.box-shadow-small {
+    box-shadow: var(--box-shadow-small);
+}
+
+.box-shadow-small-center {
+    box-shadow: var(--box-shadow-small-center);
+}
+
+.box-shadow-medium-center {
+    box-shadow: var(--box-shadow-medium-center);
+}

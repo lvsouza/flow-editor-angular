@@ -1,0 +1,12 @@
+:root {
+    --outline-none: none;
+    --outline-soft: var(--size-xxs) solid var(--color-primary);
+}
+
+.outline-none {
+    outline: var(--outline-none);
+}
+
+.outline-soft {
+    outline: var(--outline-soft);
+}

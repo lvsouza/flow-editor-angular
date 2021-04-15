@@ -18,6 +18,8 @@
     ]
   },
   "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
     "enableI18nLegacyMessageIdFormat": false
   }
 }

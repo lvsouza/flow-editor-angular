@@ -1,0 +1,71 @@
+<div style="width: 100vw;height: 100vh;">
+  <svg
+    enableZoom
+    [(zoom)]="zoom"
+
+    (click)="clickOutside($event)"
+    (dblclick)="addItem($event)"
+
+    style="min-width: 100%;min-height: 100%;"
+    [style.backgroundImage]="'radial-gradient(var(--color-text) 5%, var(--color-background) 5%)'"
+    [style.backgroundSize]="'15px 15px'"
+  >
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" stroke="var(--color-primary)" fill="var(--color-primary)" />
+    </marker>
+  </defs>
+
+    <!-- Build lines in the interface -->
+    <g
+    *ngFor="let item of items; index as i"
+    
+      app-line
+      [item]="item"
+      [nextItem]="items[i+1]"
+    ></g>
+
+
+    <!-- Build items in the interface -->
+    <foreignObject      
+      *ngFor="let item of items; index as i"
+
+      dragEnabled
+      [dragZoom]="zoom"
+      [(dragTop)]="item.top"
+      [(dragLeft)]="item.left"
+      [dragDelimiterTop]="10"
+      [dragDelimiterLeft]="10"
+      [dragSnapGridSize]="15"
+      [dragSnapGridWhileDrag]="snapGridWhileDrag"
+
+      [attr.width]="item.width + 'px'"
+      [attr.height]="item.height + 'px'"
+
+      [style.cursor]="'all-scroll'"
+      [style.transition]="'box-shadow 0.2s'"
+      [style.boxShadow]="item.isSelected ? 'var(--shadow-m)' : ''"
+      
+      (click)="$event.stopPropagation()"
+      (mousedown)="selectByIndex($event, i, $event.ctrlKey)"
+      >
+        <div
+          [style.width]="'100%'"
+          [style.height]="'100%'"
+          [style.pointerEvents]="'none'"
+          [style.backgroundColor]="'var(--color-background-paper)'"
+          [class]="'padding-xs border-radius-soft flex-column' + (item.isSelected ? ' ' : '')"
+        >
+          <input
+
+            [value]="item.text"
+            (input)="item.text = $event.target.value"
+
+            [style.pointerEvents]="'all'"
+          />
+          {{item.text}}
+        </div>
+    </foreignObject>
+
+  </svg>
+</div>

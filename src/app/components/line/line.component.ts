@@ -1,17 +1,21 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IItem } from 'src/app/interfaces/IItem';
+
+type Sides = 'left' | 'top' | 'right' | 'bottom';
 
 @Component({
   selector: '[app-line]',
   templateUrl: './line.component.html',
 })
-export class LineComponent {
+export class LineComponent implements OnInit {
   fowardItem: IItem;
   @Input() item: IItem;
   @Input() nextItem?: IItem;
 
   /** Get angue from a grup of coords */
   public get angle(): number {
+    if (!this.nextItem || !this.item) return 0;
+
     let angle = Math.atan2(this.item.left - this.nextItem.left, this.item.top - this.nextItem.top) * (180 / Math.PI);
 
     if (angle < 0) {
@@ -23,7 +27,52 @@ export class LineComponent {
     return angle;
   }
 
+  private get sideAngle(): number {
+    if (this.angle >= 45 && this.angle <= 135) {// Left
+      return this.angle - 45;
+
+    } else if (this.angle >= 135 && this.angle <= 225) {// Top
+      return this.angle - 135;
+
+    } else if (this.angle >= 225 && this.angle <= 315) {// Right
+      return this.angle - 225;
+
+    } else if ((this.angle >= 315 && this.angle <= 360) || (this.angle >= 0 && this.angle <= 45)) {// Bottom
+      if (this.angle >= 315 && this.angle <= 360) {// Bottom - Left
+        return this.angle - 315;
+
+      } else {// Bottom - Right
+        return this.angle + 45;
+      }
+    }
+  }
+
   constructor() { }
+
+  ngOnInit() {
+    setInterval(() => {
+      if (!this.nextItem || !this.item) return;
+
+      console.log('angle: ', this.angle)
+      console.log('sideAngle: ', this.sideAngle)
+      console.log('getCurrentSide: ', this.getCurrentSide(this.angle))
+    }, 100);
+  }
+
+  private getCurrentSide(angle: number): Sides {
+    if (angle >= 45 && angle <= 135) {// Left
+      return 'left';
+
+    } else if (angle >= 135 && angle <= 225) {// Top
+      return 'top';
+
+    } else if (angle >= 225 && angle <= 315) {// Right
+      return 'right';
+
+    } else if ((angle >= 315 && angle <= 360) || (angle >= 0 && angle <= 45)) {// Bottom
+      return 'bottom';
+    }
+  }
 
 
   /** Get line distance */
@@ -31,158 +80,67 @@ export class LineComponent {
     return Math.hypot((top2 - top), (left2 - left));
   }
 
+  private getPositionByAngle(value: number, sideAngle: number, space: number) {
+    const sideAnglePercent = (sideAngle * 100) / 90;
+
+    const spaceBySideAnglePercent = (space * sideAnglePercent) / 100;
+
+    return value - spaceBySideAnglePercent;
+  }
+
   // Item
   public getX1(x1: number) {
 
-    // 225 - 315
-    if (this.angle < 315 && this.angle > 225) {
-      return x1 - (this.item.width / 2);
-
-      // 315 - 0 - 45
-    } else if (this.angle > 315 || this.angle < 45) {
-      if (this.angle > 315 && this.angle < 335) {
-        return x1 - (this.item.width / 4);
-
-      } else if (this.angle > 25 && this.angle < 45) {
-        return x1 + (this.item.width / 4);
-
-      }
-
-      return x1;
-
-      // 135 - 225
-    } else if (this.angle < 225 && this.angle > 135) {
-      if (this.angle > 190) {
-        return x1 - (this.item.width / 4);
-
-      } else if (this.angle < 170) {
-        return x1 + (this.item.width / 4);
-
-      }
-
-      return x1;
-
-      // 45 - 135
-    } else if (this.angle > 45 && this.angle < 135) {
-      return x1 + (this.item.width / 2);
-
+    switch (this.getCurrentSide(this.angle)) {
+      case 'left':
+        return x1 + this.item.width;
+      case 'top':
+        return this.getPositionByAngle(x1 + this.item.width, this.sideAngle, this.item.width);
+      case 'right':
+        return x1;
+      case 'bottom':
+        return this.getPositionByAngle(x1, this.sideAngle, -this.item.width);
     }
-
-    return x1;
   }
   public getY1(y1: number) {
 
-    // 315 - 0 - 45
-    if (this.angle > 315 || this.angle < 45) {
-      return y1 - this.item.height;
-
-      // 225 - 315
-    } else if (this.angle > 225 && this.angle < 315) {
-      if (this.angle > 225 && this.angle < 250) {
-        return (y1 - (this.item.height / 2)) + (this.item.height / 4);
-
-      } else if (this.angle > 290 && this.angle < 315) {
-        return (y1 - (this.item.height / 2)) - (this.item.height / 4);
-
-      }
-
-      return y1 - (this.item.height / 2);
-
-      // 45 - 135
-    } else if (this.angle < 135 && this.angle > 45) {
-      if (this.angle > 115 && this.angle < 135) {
-        return (y1 - (this.item.height / 2)) + (this.item.height / 4);
-
-      } else if (this.angle > 45 && this.angle < 70) {
-        return (y1 - (this.item.height / 2)) - (this.item.height / 4);
-
-      }
-
-      return y1 - (this.item.height / 2);
-
-      // 135 - 225
-    } else if (this.angle < 225 && this.angle > 135) {
-      return y1;
+    switch (this.getCurrentSide(this.angle)) {
+      case 'left':
+        return this.getPositionByAngle(y1, this.sideAngle, -this.item.height);
+      case 'top':
+        return y1 + this.item.height;
+      case 'right':
+        return this.getPositionByAngle(y1 + this.item.height, this.sideAngle, this.item.height);
+      case 'bottom':
+        return y1;
     }
-
-    return y1;
   }
 
   // Next item
   public getX2(x2: number) {
 
-    // 225 - 315
-    if (this.angle < 315 && this.angle > 225) {
-      return x2 + (this.nextItem.width / 2) + 5;
-
-      // 315 - 0 - 45
-    } else if (this.angle > 315 || this.angle < 45) {
-      if (this.angle > 315 && this.angle < 335) {
-        return x2 + (this.nextItem.width / 4);
-
-      } else if (this.angle > 25 && this.angle < 45) {
-        return x2 - (this.nextItem.width / 4);
-
-      }
-
-      return x2;
-
-      // 135 - 225
-    } else if (this.angle < 225 && this.angle > 135) {
-      if (this.angle > 190) {
-        return x2 + (this.nextItem.width / 4);
-
-      } else if (this.angle < 170) {
-        return x2 - (this.nextItem.width / 4);
-
-      }
-
-      return x2;
-
-      // 45 - 135
-    } else if (this.angle > 45 && this.angle < 135) {
-      return x2 - (this.nextItem.width / 2) - 5;
-
+    switch (this.getCurrentSide(this.angle)) {
+      case 'left':
+        return x2;
+      case 'top':
+        return this.getPositionByAngle(x2, this.sideAngle, -this.nextItem.width);
+      case 'right':
+        return x2 + this.nextItem.width;
+      case 'bottom':
+        return this.getPositionByAngle(x2 + this.nextItem.width, this.sideAngle, this.nextItem.width);
     }
-
-    return x2;
   }
   public getY2(y2: number) {
 
-    // 315 - 0 - 45 ---
-    if (this.angle > 315 || this.angle < 45) {
-
-      return y2 + this.nextItem.height + 5;
-
-      // 225 - 315
-    } else if (this.angle > 225 && this.angle < 315) {
-      if (this.angle > 225 && this.angle < 250) {
-        return (y2 + (this.nextItem.height / 2)) - (this.nextItem.height / 4);
-
-      } else if (this.angle > 290 && this.angle < 315) {
-        return (y2 + (this.nextItem.height / 2)) + (this.nextItem.height / 4);
-
-      }
-
-      return y2 + (this.nextItem.height / 2);
-
-      // 45 - 135
-    } else if (this.angle < 135 && this.angle > 45) {
-      if (this.angle > 115 && this.angle < 135) {
-        return (y2 + (this.nextItem.height / 2)) - (this.nextItem.height / 4);
-
-      } else if (this.angle > 45 && this.angle < 70) {
-        return (y2 + (this.nextItem.height / 2)) + (this.nextItem.height / 4);
-
-      }
-
-      return y2 + (this.nextItem.height / 2);
-
-      // 135 - 225
-    } else if (this.angle < 225 && this.angle > 135) {
-      return y2 - 5;
+    switch (this.getCurrentSide(this.angle)) {
+      case 'left':
+        return this.getPositionByAngle(y2 + this.nextItem.height, this.sideAngle, this.nextItem.height);
+      case 'top':
+        return y2;
+      case 'right':
+        return this.getPositionByAngle(y2, this.sideAngle, -this.nextItem.height);
+      case 'bottom':
+        return y2 + this.nextItem.height;
     }
-
-    return y2;
   }
 }

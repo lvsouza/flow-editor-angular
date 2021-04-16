@@ -5,8 +5,8 @@
 
   style="stroke:var(--color-primary);"
 
-  [attr.y1]="getY1(item.top + item.height)"
-  [attr.x1]="getX1((item.left + (item.width / 2)))"
+  [attr.y1]="getY1(item.top)"
+  [attr.x1]="getX1(item.left)"
   [attr.y2]="getY2(nextItem.top)"
-  [attr.x2]="getX2((nextItem.left + (nextItem.width / 2)))"
+  [attr.x2]="getX2(nextItem.left)"
 />

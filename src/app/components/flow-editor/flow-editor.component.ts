@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IItem } from './../../interfaces/IItem';
 
 @Component({
@@ -6,7 +6,7 @@ import { IItem } from './../../interfaces/IItem';
   templateUrl: './flow-editor.component.html',
   styleUrls: ['./flow-editor.component.css']
 })
-export class FlowEditorComponent implements OnInit {
+export class FlowEditorComponent {
   @Input() items: IItem[] = [];
   @Input() snapGridWhileDrag?: boolean = false;
 
@@ -16,8 +16,8 @@ export class FlowEditorComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.items);
+  get getBackgroundSize() {
+    return ((15 / devicePixelRatio) / this.zoom);
   }
 
   selectByIndex(e: MouseEvent, index: number, keepSelected: boolean = false) {
@@ -31,11 +31,11 @@ export class FlowEditorComponent implements OnInit {
 
     this.items.push({
       id: this.items.length,
-      width: 500,
-      height: 500,
+      width: 200,
+      height: 100,
       text: 'Testando',
       top: e.offsetY - 50,
-      left: e.offsetX - 50,
+      left: e.offsetX - 100,
     })
   }
 

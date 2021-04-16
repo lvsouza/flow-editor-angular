@@ -15,9 +15,6 @@ export class ZoomDirective implements OnInit, OnDestroy {
   ngOnInit() {
     this.elementRef.nativeElement.style.zoom = this.zoom;
 
-    document.addEventListener('wheel', e => {
-      e.preventDefault();
-    });
     window.addEventListener('wheel', e => {
       e.preventDefault();
       this.handleWhell(e);

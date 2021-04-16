@@ -5,6 +5,7 @@
 
     enableBackgroundDraggable
     [(top)]="boardTop"
+    [(dragZoom)]="zoom"
     [(left)]="boardLeft"
 
     (click)="clickOutside($event)"
@@ -12,7 +13,7 @@
 
     style="min-width: 100%;min-height: 100%;"
     [style.backgroundImage]="'radial-gradient(var(--color-text) 5%, var(--color-background) 5%)'"
-    [style.backgroundSize]="'15px 15px'"
+    [style.backgroundSize]="getBackgroundSize + 'px ' + getBackgroundSize + 'px'"
   ><g>
 
     <defs>
@@ -23,13 +24,12 @@
 
     <!-- Build lines in the interface -->
     <g
-    *ngFor="let item of items; index as i"
+      *ngFor="let item of items; index as i"
 
       app-line
       [item]="item"
       [nextItem]="items[i+1]"
     ></g>
-
 
     <!-- Build items in the interface -->
     <foreignObject
